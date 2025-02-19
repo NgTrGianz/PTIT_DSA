@@ -4,32 +4,28 @@ using str = string;
 using ll = long long;
 int mod = 1e9 + 7;
 
-void ans (int n){
-    for (int i = 2; i <= sqrt(n); i++){
-        if (n % i == 0){
-            int cnt = 0;
-            while (n % i == 0){
-                ++cnt;
-                n /= i;
+int intersection(str a){
+    int ans = 0;
+    for (int i = 0; i < a.size() - 1; i++){
+        int j = i + 1;
+        int cnt[256] = {0};
+        cnt[a[i]]++;
+        while (a[j] != a[i] && j < a.size()){
+            if (cnt[a[j]] < 2) cnt[a[j]]++;
+            if (cnt[a[j]] == 1){ 
+                ++ans;
+                cout << a[j] << endl;
             }
-            cout << i << "(" << cnt << ")" << " ";
+            if (cnt[a[j]] == 2) --ans;
+            ++j;
         }
-    }
-    if (n > 1){
-        cout << n << "(1)";
-    }
-    cout << endl;
-}
+        cnt[a[j]]++;
 
-int main(){
-    int t;
-    cin >> t;
-    int tc = 0;
-    while (t--){
-        ++tc;
-        int n;
-        cin >> n;  
-        cout << "Test " << tc << ": ";
-        ans(n);
     }
+    return ans;
+}
+int main(){
+    str s;
+    cin >> s;
+    cout << intersection(s) << endl;
 }
