@@ -1,32 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 vector<vector<int>> ans;
-int fre[100] ;
-void gen(vector<int> a, int n, int k, int start){
+
+void gen(vector<int> a, int n, int k, int start, map<int, int> fre){
     if (a.size() == k){
         ans.push_back(a);
-        return ;
     } else {
         for (int i = start + 1; i <= n; i++){
-            a.push_back(i);
-            if(a[0] <= n - k + 1) gen(a, n, k, i);
-            a.pop_back();
+            if (fre[i] == 0){
+                a.push_back(i);
+                fre[i] = 1;
+                gen(a, n, k, i, fre);
+                fre[i] = 0;
+                a.pop_back();
+            }
         }
     }
 }
 int main(){
     int n, k;
     cin >> n >> k;
-    int t = 0;
+    set<int> se;
+    vector<int> a;
     for (int i = 0; i < n; i++){
         int x; cin >> x;
-        t = max(t, x);
+        se.insert(x);
     }
-    vector<int> a;
-    gen(a, t, k, 0);
+    for (auto x : se){
+        a.push_back(x);
+    }
+    map<int, int> fre;
+    vector<int> tmp;
+    gen(tmp, a.size(), k, 0, fre);
     for (auto v : ans){
         for (auto x : v){
-            cout << x << " ";
+            cout << a[x - 1] << " ";
         }
         cout << endl;
     }

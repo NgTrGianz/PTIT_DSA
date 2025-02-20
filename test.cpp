@@ -15,7 +15,7 @@ long long ans (str s){
         } else {
             long long a = st.top(); st.pop();
             long long b = st.top(); st.pop();
-            st.push(cal(a, b, x));
+            st.push(cal(b, a, x));
         }
     }
     return st.top();
